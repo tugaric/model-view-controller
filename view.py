@@ -7,8 +7,7 @@ class myView:
         self.root = tk.Tk() if master is None else tk.Toplevel(master)
         self.root.configure(height=200, highlightcolor="#4949f8", width=400)
         self.root.title("Rotarex homologation")
-        self.root.minsize(600, 200)
-
+        
         label2 = ttk.Label(self.root)
         label2.configure(text='Select serie: ')
         label2.grid(column=0, row=0)
@@ -55,6 +54,12 @@ class myView:
 
         # Main widget
         self.mainwindow = self.root
+
+    def set_seat(self, seat):
+        self.lbl_sdisc_article_nbr.configure(text=seat)
+
+    def set_body(self, body):
+        self.lbl_body_article_nbr.configure(text=body)
 
     def run(self):
         self.mainwindow.mainloop()

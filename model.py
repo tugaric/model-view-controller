@@ -1,18 +1,8 @@
 import sqlite3
+from my_dataclass import article
+from typing import Tuple, List
 from strenum import StrEnum
 from SQL import SQL_QUERY
-
-class article:
-    def __init__(self, article_number, plan):
-        self.article_number = article_number
-        self.plan = plan
-
-class valve:
-    def __init__(self, body, seat, lower_spindle, upper_spindle):
-        self.body = body
-        self.seat = seat
-        self.lower_spindle = lower_spindle
-        self.upper_spindle = upper_spindle
 
 class myModel:
     path = "rotarex.db"
@@ -35,5 +25,5 @@ if __name__ == "__main__":
     model = myModel()
     serie = "C045"
     body = model.get_serie_component(serie, SQL_QUERY.BODY)
-    seat = model.get_serie_component(serie, SQL_QUERY.SEAT)
-    print(seat)
+    body_article = article(*body)
+    print(body_article)

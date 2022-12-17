@@ -12,20 +12,24 @@ class myController:
         self.view.setup(self)
         self.view.run()
 
+    def get_comp_data(self, serie):
+        seat = self.model.get_serie_component(serie, SQL_QUERY.SEAT)
+        body = self.model.get_serie_component(serie, SQL_QUERY.BODY)
+        self.model.store_image(serie)
+        tk_img = ImageTk.PhotoImage(Image.open("temp.png"))
+        return tk_img, seat, body
+
     def serie_selected(self, *event):
-        # print(self.view.tkVar_select_serie.get())
+        # get the data of all the different components 
         selected_serie = self.view.tkVar_select_serie.get()
+        tk_img, seat, body = self.get_comp_data(selected_serie)
         
         # set the image
-        self.model.store_image(selected_serie)
-        tk_img = ImageTk.PhotoImage(Image.open("temp.png"))
         self.view.lbl_image.configure(image=tk_img)
         self.view.lbl_image.image = tk_img
 
         # get seat data for the serie
-        seat = self.model.get_serie_component(selected_serie, SQL_QUERY.SEAT)
-        self.view.lbl_sdisc_article_nbr.configure(text=seat)
+        self.view.set_seat(seat)
 
         # get body data for the serie
-        body = self.model.get_serie_component(selected_serie, SQL_QUERY.BODY)
-        self.view.lbl_body_article_nbr.configure(text=body)
+        self.view.set_body(body)
