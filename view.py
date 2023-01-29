@@ -3,7 +3,7 @@ import tkinter.ttk as ttk
 
 class myView:
     def setup(self, controller, master=None):
-        # build ui
+    # build ui
         self.root = tk.Tk() if master is None else tk.Toplevel(master)
         self.root.configure(height=200, highlightcolor="#4949f8", width=400)
         self.root.title("Rotarex homologation")
@@ -13,7 +13,6 @@ class myView:
         label2.grid(column=0, row=0)
         self.cbo_select_serie = ttk.Combobox(self.root)
 
-        # selected serie variable
         self.tkVar_select_serie = tk.StringVar()
         self.tkVar_select_serie.trace_add("write", controller.serie_selected)
 
@@ -31,35 +30,37 @@ class myView:
         label4 = ttk.Label(self.root)
         label4.configure(text='seat disc:')
         label4.grid(column=0, row=3, sticky="nw")
+        
+        columns = ("article", "plan")
 
-        self.lbl_body_article_nbr = ttk.Label(self.root)
-        self.lbl_body_article_nbr.configure(state="normal", text='lbl_body_article')
-        self.lbl_body_article_nbr.grid(column=1, row=2, sticky="n")
+    # TREEVIEW
+        self.treeV_body = ttk.Treeview(self.root, columns=columns)
+        self.treeV_body["show"] = "headings"
+        self.treeV_body.heading("plan", text="plan number")
+        self.treeV_body.heading("article", text="article number")
+        self.treeV_body.grid(column=1, row=2)
 
-        self.lbl_sdisc_article_nbr = ttk.Label(self.root)
-        self.lbl_sdisc_article_nbr.configure(text='lbl_seat_disc_article')
-        self.lbl_sdisc_article_nbr.grid(column=1, row=3, sticky="n")
-
-        self.lbl_body_plan = ttk.Label(self.root)
-        self.lbl_body_plan.configure(text='lbl_body_plan')
-        self.lbl_body_plan.grid(column=2, row=2, sticky="n")
-
-        self.lbl_sdisc_plan = ttk.Label(self.root)
-        self.lbl_sdisc_plan.configure(text='lbl_seat_disc_plan')
-        self.lbl_sdisc_plan.grid(column=2, row=3, sticky="n")
+        self.treeV_seat = ttk.Treeview(self.root, columns=columns)
+        self.treeV_seat.heading("plan", text="plan number")
+        self.treeV_seat.heading("article", text="article number")
+        self.treeV_seat.grid(column=1, row=3)
 
         self.lbl_image = ttk.Label(self.root)
         self.lbl_image.configure(text='<image>')
         self.lbl_image.grid(column=3, row=2, sticky="nsew", rowspan=4)
 
-        # Main widget
+    # Main widget
         self.mainwindow = self.root
 
-    def set_seat(self, seat):
-        self.lbl_sdisc_article_nbr.configure(text=seat)
+    def update_seat_tree(self, seat):
+        self.treeV_seat.insert("", index = tk.END, values = seat)
 
-    def set_body(self, body):
-        self.lbl_body_article_nbr.configure(text=body)
+    def update_body_tree(self, body):
+        self.treeV_body.insert("", index=tk.END, values = body)
+
+    def clear_gui(self):
+        self.treeV_body.delete(*self.treeV_body.get_children())
+        self.treeV_seat.delete(*self.treeV_seat.get_children())
 
     def run(self):
         self.mainwindow.mainloop()
