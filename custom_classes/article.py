@@ -4,4 +4,3 @@ from dataclasses import dataclass
 class article:
     number: str
     plan: str
-    

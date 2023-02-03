@@ -1,6 +1,6 @@
-from view import myView
-from model import myModel
-from SQL import SQL_QUERY
+from mvc.view import myView
+from mvc.model import myModel
+from custom_classes.SQL import SQL_QUERY
 from PIL import Image, ImageTk
 
 class myController:
@@ -20,6 +20,8 @@ class myController:
         return tk_img, seat, body
 
     def serie_selected(self, *event):
+    
+        self.view.clear_gui()
         # get the data of all the different components 
         selected_serie = self.view.tkVar_select_serie.get()
         tk_img, seat, body = self.get_comp_data(selected_serie)
@@ -28,8 +30,8 @@ class myController:
         self.view.lbl_image.configure(image=tk_img)
         self.view.lbl_image.image = tk_img
 
-        # get seat data for the serie
-        self.view.set_seat(seat)
+        for b in body:
+            self.view.update_body_tree((b.number, b.plan))
 
-        # get body data for the serie
-        self.view.set_body(body)
+        for s in seat:
+            self.view.update_seat_tree((s.number, s.plan))

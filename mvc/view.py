@@ -1,5 +1,6 @@
 import tkinter as tk
 import tkinter.ttk as ttk
+from custom_classes.configure import config_treeview
 
 class myView:
     def setup(self, controller, master=None):
@@ -31,23 +32,14 @@ class myView:
         label4.configure(text='seat disc:')
         label4.grid(column=0, row=3, sticky="nw")
         
-        columns = ("article", "plan")
-
-    # TREEVIEW
-        self.treeV_body = ttk.Treeview(self.root, columns=columns)
-        self.treeV_body["show"] = "headings"
-        self.treeV_body.heading("plan", text="plan number")
-        self.treeV_body.heading("article", text="article number")
-        self.treeV_body.grid(column=1, row=2)
-
-        self.treeV_seat = ttk.Treeview(self.root, columns=columns)
-        self.treeV_seat.heading("plan", text="plan number")
-        self.treeV_seat.heading("article", text="article number")
-        self.treeV_seat.grid(column=1, row=3)
-
         self.lbl_image = ttk.Label(self.root)
         self.lbl_image.configure(text='<image>')
         self.lbl_image.grid(column=3, row=2, sticky="nsew", rowspan=4)
+
+    # TREEVIEW
+        columns = ("article", "plan")
+        self.treeV_body = config_treeview(self.root, columns, 1, 2)
+        self.treeV_seat = config_treeview(self.root, columns, 1, 3)
 
     # Main widget
         self.mainwindow = self.root
