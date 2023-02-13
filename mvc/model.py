@@ -16,13 +16,6 @@ class myModel:
         query_result = self.cursor.fetchall()
         return [ article(data_point[0], data_point[1]) for data_point in query_result ]
 
-    def store_image(self, serie):
-        sql_statement = SQL_QUERY.IMAGE + f"\"{serie}\""
-        self.cursor.execute(sql_statement)
-        data = self.cursor.fetchall() 
-        with open("temp.png", 'wb') as file:
-            file.write(data[0][0])
-
 if __name__ == "__main__":
     model = myModel()
     series = ["C105","C045"]
